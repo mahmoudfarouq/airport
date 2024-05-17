@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: Airport
+  description: Airport
+  version: 1.0.0
+servers:
+  - url: 'localhost:1323'
+    description: local server
+
+paths:
+  /:
+    post:
+      summary: Reconstruct the complete Itinerary from a list of tickets.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              description: list of tickets
+              minItems: 1
+              items:
+                type: array
+                description: A tuple containing the source and destination of the ticket.
+                required: true
+                minItems: 2
+                maxItems: 2
+                items:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
